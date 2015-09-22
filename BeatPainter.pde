@@ -1,5 +1,5 @@
 /*
-Processing Music Painter
+Beat Painter
 By Will Brewer
 
 Instructions:
@@ -67,6 +67,15 @@ void createGUI() {
   dropP5.setAutoDraw(false);
   cP5.setAutoDraw(false);
   
+  //sets colors of UI elements
+  cP5.setColorForeground(color(255, 0, 0, 128));
+  cP5.setColorBackground(color(150, 0, 0, 128));
+  cP5.setColorActive(color(255, 0, 0, 120));
+  dropP5.setColorForeground(color(255, 0, 0, 128));
+  //dropP5.setColorBackground(color(255, 0, 0, 128));
+  dropP5.setColorActive(color(255, 0, 0, 128));
+  
+  
   radioButton = cP5.addRadioButton("radioButton")
                  .setPosition(15, 10)
                  .setSize(15, 15)
@@ -80,12 +89,12 @@ void createGUI() {
           
   dropSong = dropP5.addDropdownList("Choose Song")
                    .setPosition(100, 5)
-                   .setBackgroundColor(color(190))
+                   .setBackgroundColor(color(0))
                    .setItemHeight(15)
                    .setBarHeight(15)
                    .setOpen(false)
                    .setColorBackground(color(60))
-                   .setColorActive(color(255, 128))
+                   .setColorActive(color(255))
                    .addItem("Tame Impala", 0)
                    .addItem("Bee Gees", 1)
                    .addItem("Data", 2)
@@ -93,12 +102,12 @@ void createGUI() {
 
   dropEffect = dropP5.addDropdownList("Choose Effect")
                    .setPosition(250, 5)
-                   .setBackgroundColor(color(190))
+                   .setBackgroundColor(color(0))
                    .setItemHeight(15)
                    .setBarHeight(15)
                    .setOpen(false)
                    .setColorBackground(color(60))
-                   .setColorActive(color(255, 128))
+                   .setColorActive(color(255))
                    .addItem("Plaid", 0)
                    .addItem("Dots", 1)
                    .addItem("Plaid Dots", 2)
@@ -287,11 +296,15 @@ void drawScreen() {
         //empty catch
       }
     } else {
-      if(isSpeed && input == 1) {
-          circles.get(i).setSpeed(in.left.level() * 10, in.right.level() * 10);
-        } else if(isSpeed && input == 2) {
-          circles.get(i).setSpeed(song.left.level() * 10, song.right.level() * 10);
-        }
+      try {
+        if(isSpeed && input == 1) {
+            circles.get(i).setSpeed(in.left.level() * 10, in.right.level() * 10);
+          } else if(isSpeed && input == 2) {
+            circles.get(i).setSpeed(song.left.level() * 10, song.right.level() * 10);
+          }
+      } catch(NullPointerException e) {
+        
+      }
     }
     
     if(circles.get(i).getY() > 450 || circles.get(i).getY() < 73) {
