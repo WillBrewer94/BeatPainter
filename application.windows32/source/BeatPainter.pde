@@ -141,6 +141,7 @@ void createGUI() {
 void setupAudio() {
   minim = new Minim(this);
   in = minim.getLineIn(Minim.STEREO, 512);
+  //in = minim.getLineIn();
   beat = new BeatDetect();
 }
 
@@ -287,11 +288,15 @@ void drawScreen() {
         //empty catch
       }
     } else {
-      if(isSpeed && input == 1) {
+      try {
+        if(isSpeed && input == 1) {
           circles.get(i).setSpeed(in.left.level() * 10, in.right.level() * 10);
         } else if(isSpeed && input == 2) {
           circles.get(i).setSpeed(song.left.level() * 10, song.right.level() * 10);
         }
+      } catch(NullPointerException e) {
+         //empty catch 
+      }
     }
     
     if(circles.get(i).getY() > 450 || circles.get(i).getY() < 73) {
